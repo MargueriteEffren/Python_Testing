@@ -185,7 +185,7 @@ def test_points_number_update(monkeypatch):
     result = purchasePlaces()
 
     assert result[1]['points'] == 1
-
+    assert result[3]['numberOfPlaces'] == 10
 
 def test_purchase_places_for_a_past_competition(monkeypatch):
 

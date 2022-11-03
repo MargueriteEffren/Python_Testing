@@ -20,6 +20,11 @@ def test_login(client):
     assert clubs[0]["email"] in data
     assert competitions[0]["name"] in data
     assert competitions[1]["name"] in data
+    assert clubs[1]["name"] in data
+    assert clubs[1]["points"] in data
+    assert clubs[2]["name"] in data
+    assert clubs[2]["points"] in data
+
 
 
 

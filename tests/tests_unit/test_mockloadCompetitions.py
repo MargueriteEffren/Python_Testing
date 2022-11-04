@@ -1,5 +1,6 @@
 from Python_Testing import server
 
+
 def mockloadCompetitions():
     """
     Mocks data loading from database, discounted after test_booking
@@ -16,6 +17,7 @@ def mockloadCompetitions():
             "numberOfPlaces": 10
         }]
     return list_of_competitions
+
 
 def test_return_object_competitions():
     server.loadCompetitions = mockloadCompetitions()

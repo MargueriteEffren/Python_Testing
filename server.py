@@ -5,14 +5,14 @@ from datetime import datetime, timedelta
 
 def loadClubs():
     with open('clubs.json') as c:
-         listOfClubs = json.load(c)['clubs']
-         return listOfClubs
+        listOfClubs = json.load(c)['clubs']
+        return listOfClubs
 
 
 def loadCompetitions():
     with open('competitions.json') as comps:
-         listOfCompetitions = json.load(comps)['competitions']
-         return listOfCompetitions
+        listOfCompetitions = json.load(comps)['competitions']
+        return listOfCompetitions
 
 
 app = Flask(__name__)
@@ -21,19 +21,22 @@ app.secret_key = 'something_special'
 competitions = loadCompetitions()
 clubs = loadClubs()
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/showSummary',methods=['POST'])
+
+@app.route('/showSummary', methods=['POST'])
 def showSummary():
     club_emails = [club['email'] for club in clubs]
     if request.form['email'] in club_emails:
-        club = [club for club in clubs if request.form['email'] == club['email']][0]
+        club = [club for club in clubs
+                if request.form['email'] == club['email']][0]
         request_club_index = clubs.index(club)
-        shadow_club_list = clubs.copy() # copies clubs'list
-        shadow_club_list.pop(request_club_index) # extracts connected club to have a
-        # list only with other clubs
+        shadow_club_list = clubs.copy()  # copies clubs'list
+        shadow_club_list.pop(request_club_index)  # extracts
+        # connected club to have a list with only other clubs
         return render_template('welcome.html',
                                club=club,
                                competitions=competitions,
@@ -44,7 +47,7 @@ def showSummary():
 
 
 @app.route('/book/<competition>/<club>')
-def book(competition,club):
+def book(competition, club):
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     if foundClub and foundCompetition:
@@ -98,9 +101,6 @@ def purchasePlaces():
             return render_template('booking.html',
                                    club=club,
                                    competition=competition)
-
-
-# TODO: Add route for points display
 
 
 @app.route('/logout')

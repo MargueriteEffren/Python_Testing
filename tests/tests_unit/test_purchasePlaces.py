@@ -1,6 +1,5 @@
 from Python_Testing import server
-from Python_Testing.server import purchasePlaces, clubs
-from flask import Flask, render_template, request, flash
+from Python_Testing.server import purchasePlaces
 
 
 class MockRequest13places:
@@ -10,8 +9,8 @@ class MockRequest13places:
 
     def __init__(self):
         self.form = {'places': '13',
-                     'competition':'Fall Classic',
-                     'club':'Iron Temple'}
+                     'competition': 'Fall Classic',
+                     'club': 'Iron Temple'}
 
     @staticmethod  # defines verbose response in terminal?
     def form_data(self):
@@ -26,8 +25,8 @@ class MockRequest12places:
 
     def __init__(self):
         self.form = {'places': '12',
-                     'competition':'Fall Classic',
-                     'club':'Iron Temple'}
+                     'competition': 'Fall Classic',
+                     'club': 'Iron Temple'}
 
     @staticmethod  # defines verbose response in terminal?
     def form_data(self):
@@ -42,8 +41,8 @@ class MockRequest3places:
 
     def __init__(self):
         self.form = {'places': '3',
-                     'competition':'Fall Classic',
-                     'club':'Iron Temple'}
+                     'competition': 'Fall Classic',
+                     'club': 'Iron Temple'}
 
     @staticmethod  # defines verbose response in terminal?
     def form_data(self):
@@ -58,8 +57,8 @@ class MockRequestInThePast3places:
 
     def __init__(self):
         self.form = {'places': '3',
-                     'competition':'Spring Festival',
-                     'club':'Iron Temple'}
+                     'competition': 'Spring Festival',
+                     'club': 'Iron Temple'}
 
     @staticmethod  # defines verbose response in terminal?
     def form_data(self):
@@ -127,10 +126,10 @@ def test_purchase_more_than_12_places_in_one_competition(monkeypatch):
     # so mocks it with print function for testing purposes:
     monkeypatch.setattr(server, 'flash', str)
 
-
     # remplace render_template par fonction mock_render_template
-    # qui retourne une liste, pour juste pouvoir vérifier le titre du fichier template retourné
-    # vérifie que va bien chercher le fichier 'booking.html' en cas de réservation de trop de places
+    # qui retourne une liste, pour juste pouvoir vérifier le titre
+    # du fichier template retourné; vérifie que va bien chercher
+    # le fichier 'booking.html' en cas de réservation de trop de places
     monkeypatch.setattr(server, 'render_template', mock_render_template)
 
     expected_value = ['booking.html']
@@ -148,12 +147,15 @@ def test_purchase_more_than_clubs_remaining_places(monkeypatch):
     def mock_post(*args, **kwarg):
         return MockRequest12places()
 
-    # monkey patch une saisie de 12 places réservées pour l'Iron Temple qui n'a que 4 points:
+    # monkey patch une saisie de 12 places réservées pour
+    # l'Iron Temple qui n'a que 4 points:
     monkeypatch.setattr(server, 'request', mock_post())
 
     # remplace render_template par fonction mock_render_template
-    # qui retourne une liste, pour juste pouvoir vérifier le titre du fichier template retourné
-    # vérifie que va bien chercher le fichier 'booking.html' en cas de réservation de trop de places
+    # qui retourne une liste, pour juste pouvoir vérifier
+    # le titre du fichier template retourné
+    # vérifie que va bien chercher le fichier 'booking.html'
+    # en cas de réservation de trop de places
     monkeypatch.setattr(server, 'render_template', mock_render_template)
 
     monkeypatch.setattr(server, 'flash', str)
@@ -172,12 +174,14 @@ def test_points_number_update(monkeypatch):
     def mock_post(*args, **kwarg):
         return MockRequest3places()
 
-    # monkey patch une saisie de 12 places réservées pour l'Iron Temple qui n'a que 4 points:
+    # monkey patch une saisie de 12 places réservées pour
+    # l'Iron Temple qui n'a que 4 points:
     monkeypatch.setattr(server, 'request', mock_post())
 
     # remplace render_template par fonction mock_render_template
-    # qui retourne une liste, pour juste pouvoir vérifier le titre du fichier template retourné
-    # vérifie que va bien chercher le fichier 'booking.html' en cas de réservation de trop de places
+    # qui retourne une liste, pour juste pouvoir vérifier le titre
+    # du fichier template retourné; vérifie que va bien chercher
+    # le fichier 'booking.html' en cas de réservation de trop de places
     monkeypatch.setattr(server, 'render_template', mock_render_template)
 
     monkeypatch.setattr(server, 'flash', str)
@@ -187,6 +191,7 @@ def test_points_number_update(monkeypatch):
     assert result[1]['points'] == 1
     assert result[3]['numberOfPlaces'] == 10
 
+
 def test_purchase_places_for_a_past_competition(monkeypatch):
 
     monkeypatch.setattr(server, 'loadCompetitions', mockloadCompetitions())
@@ -194,13 +199,14 @@ def test_purchase_places_for_a_past_competition(monkeypatch):
     def mock_post(*args, **kwarg):
         return MockRequestInThePast3places()
 
-    # monkey patch une saisie de 3 places réservées pour la competition Spring Festival
-    # qui a eu lieu dans le passé:
+    # monkey patch une saisie de 3 places réservées pour
+    # la competition Spring Festival qui a eu lieu dans le passé:
     monkeypatch.setattr(server, 'request', mock_post())
 
     # remplace render_template par fonction mock_render_template
-    # qui retourne une liste, pour juste pouvoir vérifier le titre du fichier template retourné
-    # vérifie que va bien chercher le fichier 'booking.html' en cas de réservation de trop de places
+    # qui retourne une liste, pour juste pouvoir vérifier le titre
+    # du fichier template retourné; vérifie que va bien chercher
+    # le fichier 'booking.html' en cas de réservation de trop de places
     monkeypatch.setattr(server, 'render_template', mock_render_template)
 
     monkeypatch.setattr(server, 'flash', str)

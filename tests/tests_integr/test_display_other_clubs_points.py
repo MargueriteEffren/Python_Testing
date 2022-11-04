@@ -1,5 +1,3 @@
-import pytest
-from Python_Testing.tests.conftest import client
 from Python_Testing import server
 
 
@@ -7,7 +5,8 @@ def test_login(client):
     app, templates = client
     clubs = server.loadClubs()
     rv = app.post(
-        "/showSummary", data=dict(email=clubs[0]["email"]), follow_redirects=True
+        "/showSummary", data=dict(email=clubs[0]["email"]),
+        follow_redirects=True
     )
     template, context = templates[0]
 

@@ -1,5 +1,6 @@
 from locust import HttpUser, task
 
+
 class ProjectPerfTest(HttpUser):
     @task
     def home(self):
@@ -17,7 +18,9 @@ class ProjectPerfTest(HttpUser):
     def purchase(self):
         self.client.post(
             "/purchasePlaces",
-            {"club": "Simply Lift", "competition": "Spring Festival", "places": 3},
+            {"club": "Simply Lift",
+             "competition": "Spring Festival",
+             "places": 3},
         )
 
     @task

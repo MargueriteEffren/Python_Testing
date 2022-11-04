@@ -1,5 +1,3 @@
-import pytest
-from Python_Testing.tests.conftest import client
 from Python_Testing import server
 
 
@@ -17,7 +15,8 @@ def test_booking_places(client):
     competitions_places_before = int(competitions[1]["numberOfPlaces"])
     rv = app.post(
         "/purchasePlaces",
-        data=dict(club=clubs[1]["name"], competition=competitions[1]["name"], places=3),
+        data=dict(club=clubs[1]["name"],
+                  competition=competitions[1]["name"], places=3),
         follow_redirects=True,
     )
     template, context = templates[1]
@@ -25,7 +24,7 @@ def test_booking_places(client):
     assert rv.status_code == 200
     assert context["club"]["points"] == club_points_before - 3
     assert (
-            context["competitions"][1]["numberOfPlaces"] == competitions_places_before - 3
+            context["competitions"][1]["numberOfPlaces"] ==
+            competitions_places_before - 3
     )
     assert "Great-booking complete!" in data
-

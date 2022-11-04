@@ -1,5 +1,3 @@
-import pytest
-from Python_Testing.tests.conftest import client
 from Python_Testing import server
 
 
@@ -10,7 +8,8 @@ def test_login(client):
     response = app.get("/")
     assert response.status_code == 200
     rv = app.post(
-        "/showSummary", data=dict(email=clubs[0]["email"]), follow_redirects=True
+        "/showSummary", data=dict(email=clubs[0]["email"]),
+        follow_redirects=True
     )
     template, context = templates[1]
     assert rv.status_code == 200
@@ -24,9 +23,3 @@ def test_login(client):
     assert clubs[1]["points"] in data
     assert clubs[2]["name"] in data
     assert clubs[2]["points"] in data
-
-
-
-
-
-
